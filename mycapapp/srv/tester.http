@@ -1,0 +1,60 @@
+###----Copy an ID from last call and add at the end
+http://localhost:4004/odata/v4/CatalogService/EmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C19847FB
+###POST Single Employee data - create
+POST http://localhost:4004/odata/v4/CatalogService/EmployeeSrv
+Content-Type: application/json
+
+
+{
+      "nameFirst": "Smitha",
+      "nameMiddle": "",
+      "nameLast": "Ronaldo",
+      "nameInitials": null,
+      "sex": "F",
+      "language": "E",
+      "phoneNumber": "9560466858",
+      "email": "christiano@sony.com",
+      "loginName": "RONALDOCH",
+      "Currency_code": "USD",
+      "salaryAmount": 110962,
+      "accountNumber": "222333444",
+      "bankId": "510655",
+      "bankName": "My Bank of Antioch"
+    }
+   
+###PATCH Single Employee data - change
+###------Take the id which was created for new employee in last call
+PATCH http://localhost:4004/odata/v4/CatalogService/EmployeeSrv/14764b64-f7e3-4b0d-9a75-46d1bd6692aa
+Content-Type: application/json
+
+
+{
+  "Currency_code": "USD",
+  "salaryAmount": 10000000
+}
+###GET All purchase orders
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet
+
+
+###GET Single purchase orders
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/74867AD200E41EDBA5D8B0C98DC2C052
+
+
+###GET PO and its items with lose coupling - $expand
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/74867AD200E41EDBA5D8B0C98DC2C052?$expand=Items
+
+
+###Pagigation - load data chunk by chunk - $top , $skip
+http://localhost:4004/odata/v4/CatalogService/EmployeeSrv?$top=2&$skip=2
+
+
+###Total Count of POs
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/$count
+
+
+###Filtering data of Employee
+http://localhost:4004/odata/v4/CatalogService/EmployeeSrv?$filter=bankName eq 'My Bank of New York'
+
+
+###Filtering data of Employee - pattern filters
+http://localhost:4004/odata/v4/CatalogService/EmployeeSrv?$filter=contains(nameFirst,'Su')
