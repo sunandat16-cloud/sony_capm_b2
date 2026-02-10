@@ -70,15 +70,15 @@ context master {
         Currency: Currency;
         salaryAmount: common.AmountT;
         accountNumber: String(16);
-        bankId: String(8);
+        bankId: String(60);
         bankName: String(64);
     }
 }
 
 
 context transaction {
-    entity purchaseorder: common.Amount{
-        key NODE_KEY: common.Guid @title : '{i18n>NODE_KEY}';
+    entity purchaseorder:cuid, common.Amount{
+        //key NODE_KEY: common.Guid @title : '{i18n>NODE_KEY}';
         PO_ID: String(40) @title : '{i18n>PO_ID}';
         PARTNER_GUID: Association to master.businesspartner @title : '{i18n>PARTNER_GUID}';
         LIFECYCLE_STATUS: String(1);
@@ -89,8 +89,8 @@ context transaction {
     }
 
 
-    entity poitems: common.Amount{
-        key NODE_KEY: common.Guid @title : '{i18n>NODE_ITEM_KEY}';
+    entity poitems: common.Amount , cuid {
+       // key NODE_KEY: common.Guid @title : '{i18n>NODE_ITEM_KEY}';
         PARENT_KEY: Association to purchaseorder @title : '{i18n>NODE_KEY}';
         PO_ITEM_POS: Integer;
         PRODUCT_GUID: Association to master.product @title : '{i18n>PRODUCT_GUID}';

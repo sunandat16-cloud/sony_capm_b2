@@ -4,21 +4,27 @@ using { anubhav.db } from '../db/datamodel';
 
 
 
-service CatalogService @(path:'CatalogService') {
+service CatalogService @(path:'CatalogService',
+                ///Authentication
+                        requires: 'authenticated-user') {
 
 
     //expose my database table as a odata entity
     //No coding required to handle CRUDQ - Create, Read, Update, Delete and Query data
     @readonly
-    entity EmployeeSrv as projection on db.master.employees;
+        //@readonly
+    entity EmployeeSrv
+        ///Authorization
+        @(restrict: [
+            { grant: ['READ'], to: 'Viewer', where :'bankName = $user.BankName' },
+            { grant: ['WRITE'], to: 'Admin' }
+        ])
+        as projection on db.master.employees;
     //Other entities
     entity BusinessPartnerSet as projection on db.master.businesspartner;
     entity AddressSet as projection on db.master.address;
     entity ProductSet as projection on db.master.product;
-    entity PurchaseOrderSet as projection on db.transaction.purchaseorder;
-    entity POItems as projection on db.transaction.poitems;
-}
-        *,
+    entity PurchaseOrderSet as projection on db.transaction.purchaseorder{        *,
         //expression
         case OVERALL_STATUS
             when 'P' then 'Pending'
@@ -32,4 +38,7 @@ service CatalogService @(path:'CatalogService') {
             when 'X' then 1
             when 'N' then 2
                 end as IconColor : Int16
-    }
+    };
+    entity POItems as projection on db.transaction.poitems;
+}
+

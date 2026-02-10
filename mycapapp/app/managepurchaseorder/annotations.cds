@@ -39,7 +39,7 @@ annotate service.PurchaseOrderSet with @(
             Criticality: IconColor
         },
 
-    ]
+    ],
 
  UI.HeaderInfo: {
         TypeName: 'Purchase Order',
